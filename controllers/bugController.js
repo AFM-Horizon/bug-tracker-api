@@ -1,80 +1,59 @@
-const repository = require("../data/bugRepository");
-const seedData = require("../data/seedData");
+const repository = require('../data/bugRepository');
 
 module.exports = {
-  get_all_bugs: async (req, res) => {
-    repository.GetAllBugs()
-    .then((data) => {
-      res.render("index", {
-        flash: req.flash("success") || "",
-        title: "The Bug Tracker",
-        subtitle: "Buggy Tracker",
-        bugList: data,
-      });
-    })
-    .catch((err) => {
-      res.redirect("/error");
-    })
-  },
-  
-  get_all_bugs_json: async (req, res) => {
-    repository.GetAllBugs()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.redirect("/error");
-    })
-  },
-  
-  get_bug_by_id_json: async (req, res) => {
-    let bug = await repository.GetBugByID(req.body.bugID);
-    res.json(bug);
-  },
-
-  create_bug_get: async (req, res) => {
-    res.render("addbug");
-  },
-
-  add_tag: async (req, res) => {
-    repository.AddTag(req.body.id, req.body.tag);
-    res.send("OK");
-  },
-
-  create_bug_post: async (req, res) => {
-    let bug = req.body.bug;
-    console.log(bug);
+  get_all_bugs: (req, res) => {
     repository
-      .InsertSingleBug(bug)
-      .then(() => {
-        res.send("OK");
+      .GetAllBugs()
+      .then((bugs) => {
+        res.status(200).send(bugs);
       })
       .catch((err) => {
-        res.send("error");
+        res.status(500).send({ error: err });
       });
   },
 
-  update_bug: async (req, res) => {
-    await repository.UpdateBug(req.body);
-    res.send('OK');
+  get_bug_by_id: (req, res) => {
+    repository
+      .GetBugByID(req.params.id)
+      .then((bug) => {
+        res.status(200).json(bug);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
   },
 
-  get_bug_view_component: async (req, res) => {
-    bugs = await repository.GetAllBugs();
-    res.render('/Components/anotherComponent/renderBugComponent',
-      (err, result) => {
-        if(err) {
-          res.redirect('/error');
-        } 
-        else {
-          res.send(require('ejs').render(result, bugs));
-        }
-      }
-    )
-  }
+  add_tag: (req, res) => {
+    repository
+      .AddTag(req.body.id, req.body.tag)
+      .then((tag) => {
+        res.status(201).send(tag);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
+
+  create_bug_post: (req, res) => {
+    const { bug } = req.body;
+    repository
+      .InsertSingleBug(bug)
+      .then((data) => {
+        res.status(201).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
+
+  update_bug: (req, res) => {
+    repository
+      .UpdateBug(req.body)
+      .then((data) => {
+        res.status(204).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
 };
-
-
-
-
-

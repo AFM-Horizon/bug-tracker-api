@@ -2,7 +2,7 @@ const express = require('express');
 const authController = require('../controllers/authController');
 const authHelpers = require('../authentication/authHelper');
 
-let router = express.Router();
+const router = express.Router();
 
 router.get('/register', authHelpers.checkAlreadyAuthenticated, authController.register_a_user_get);
 router.post('/register', authHelpers.checkAlreadyAuthenticated, authController.register_a_user_post);

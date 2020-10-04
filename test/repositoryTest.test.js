@@ -1,45 +1,45 @@
 const assert = require('assert');
-const repo = require("../data/bugRepository");
-const expect = require('chai').expect;
+const { expect } = require('chai');
+const repo = require('../data/bugRepository');
 const seedData = require('../data/seedData');
 
 describe('BUG REPOSITORY TESTS ->', () => {
   beforeEach(() => {
-    repo.DeleteCollection()
+    repo.DeleteCollection();
   });
-  
+
   afterEach(() => {
     repo.DeleteCollection();
   });
-  
-  describe("InsertSingleBug() ->", () => {
-    it("Returns Validation Error When Invalid Model Passed", (done) => {
-      let dud = {
-        dud: "rubbish",
-        filth: "trash",
+
+  describe('InsertSingleBug() ->', () => {
+    it('Returns Validation Error When Invalid Model Passed', (done) => {
+      const dud = {
+        dud: 'rubbish',
+        filth: 'trash',
       };
-  
+
       repo.InsertSingleBug(dud)
         .catch((err) => {
           assert.strictEqual(
-            "bugs validation failed: status: Path `status` is required., author: Path `author` is required., name: Path `name` is required.",
+            'bugs validation failed: status: Path `status` is required., author: Path `author` is required., name: Path `name` is required.',
             err.message
           );
           done();
-      });
+        });
     });
-  
-    it("Returns Inserted Record When Successful", (done) => {
-      let bug = {
-        name: "Testy New Bug",
-        author: "Thomas",
-        status: "Fixed",
-        description: "Will It Blend",
-        tags: [{name: "cool", colour: "info"}],
-        date: new Date(2020,07,01),
+
+    it('Returns Inserted Record When Successful', (done) => {
+      const bug = {
+        name: 'Testy New Bug',
+        author: 'Thomas',
+        status: 'Fixed',
+        description: 'Will It Blend',
+        tags: [{ name: 'cool', colour: 'info' }],
+        date: new Date(2020, 7, 1),
         comments: [],
       };
-      
+
       repo.InsertSingleBug(bug)
         .then((data) => {
           expect(data.name).to.be.equal(bug.name);
@@ -51,9 +51,9 @@ describe('BUG REPOSITORY TESTS ->', () => {
         });
     });
   });
-  
-  describe("GetAllBugs() ->", () => {
-    it("Returns Not Null", (done) => {
+
+  describe('GetAllBugs() ->', () => {
+    it('Returns Not Null', (done) => {
       repo.InsertBugCollection(seedData.initialBugs);
       repo.GetAllBugs()
         .then((data) => {
@@ -61,6 +61,5 @@ describe('BUG REPOSITORY TESTS ->', () => {
           done();
         });
     });
-  });  
+  });
 });
-

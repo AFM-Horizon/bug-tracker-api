@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const controller = require('../controllers/commentController');
 
-let router = express.Router();
+const router = express.Router();
 
 router.post('/update', controller.update_comment);
 router.post('/add', controller.insert_comment);

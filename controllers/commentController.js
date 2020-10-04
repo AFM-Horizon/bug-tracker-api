@@ -1,41 +1,44 @@
-const repository = require("../data/commentRespository");
+const repository = require('../data/commentRespository');
 
 module.exports = {
-	update_comment: async (req, res) => {
-		await repository.UpdateComment(req.body.bugId, req.body.comment._id, req.body.comment);
-		res.status(200);
-		res.send('OK');
-	},
+  update_comment: (req, res) => {
+    repository.UpdateComment(req.body.bugId, req.body.comment._id, req.body.comment)
+      .then((comment) => {
+        res.status(204).send(comment);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
 
-	insert_comment: async (req, res) => {
-		console.log(req.body.bugId + req.body.comment);
-		req.body.comment.user = req.user._id;
+  insert_comment: (req, res) => {
+    req.body.comment.user = req.user._id;
+    repository.InsertComment(req.body.bugId, req.body.comment)
+      .then((comment) => {
+        res.status(200).send(comment);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
 
-		await repository.InsertComment(req.body.bugId, req.body.comment)
-			.then(res.status(200))
-			.catch((err) => {
-				console.log(err);
-				res.redirect("/error");
-			});
-	},
+  delete_comment: (req, res) => {
+    repository.DeleteCommentByID(req.body.bugId, req.body.commentId)
+      .then(() => {
+        res.status(204).send();
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
 
-	delete_comment: async (req, res) => {
-		console.log(`BUGID:${req.body.bugId} CommentID:${req.body.commentId}`);
-		await repository.DeleteCommentByID(req.body.bugId, req.body.commentId)
-			.then(res.status(200))
-			.catch((err) => {
-				console.log(err);
-				res.redirect("/error");
-			});
-	},
-
-	get_comments: async (req, res) => {
-		await repository.GetAllComments(req.body.bugId)
-			.then(res.status(200))
-			.catch((err) => {
-				console.log("Error with Getting Comments: " + err);
-				res.redirect("/error");
-			});
-	}
-}
-
+  get_comments: (req, res) => {
+    repository.GetAllComments(req.body.bugId)
+      .then((comments) => {
+        res.status(200).send(comments);
+      })
+      .catch((err) => {
+        res.status(500).send({ error: err });
+      });
+  },
+};

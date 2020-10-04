@@ -1,40 +1,42 @@
-module.exports = (() => {
-  const bugObject = require("./bugSchemas");
-  const database = require("./database");
+const bugObject = require('./bugSchemas');
+const database = require('./database');
 
-  let BugModel = bugObject.bugModel;
+module.exports = (() => {
+  const BugModel = bugObject.bugModel;
 
   database.GetDbInstance();
-  
+
   async function _insertBugCollection(bugs) {
     await BugModel.insertMany(bugs);
   }
 
   async function _insertSingleBug(bug) {
-    let bugModel = new BugModel(bug);
-    return await bugModel.save();
+    const bugModel = new BugModel(bug);
+    return bugModel.save();
+  }
+
+  async function _getAllBugs() {
+    return BugModel.find({ archived: false }).populate('comments.user');
+  }
+
+  async function _deleteCollection() {
+    return BugModel.deleteMany();
+  }
+
+  async function _getBugByID(id) {
+    return BugModel.findById(id).populate('comments.user');
   }
 
   async function _addTag(id, tag) {
-    let bug = await _getBugByID(id);
+    const bug = await _getBugByID(id);
     bug.tags.push(tag);
     bug.save();
   }
 
-  async function _getAllBugs() {
-    return await BugModel.find({archived: false}).populate('comments.user');
-  }
-
-  async function _deleteCollection() {
-    return await BugModel.deleteMany();
-  }
-
-  async function _getBugByID(id) {
-    return await BugModel.findById(id).populate('comments.user');
-  }
-
   async function _updateBug(query) {
-    return await BugModel.findByIdAndUpdate(query.id, {$set: query.updateObject}, {upsert: false, new: true}, null);
+    return BugModel.findByIdAndUpdate(
+      query.id, { $set: query.updateObject }, { upsert: false, new: true }, null
+    );
   }
 
   return {
@@ -61,7 +63,3 @@ module.exports = (() => {
     }
   };
 })();
-
-
-
-

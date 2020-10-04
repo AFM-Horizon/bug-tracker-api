@@ -1,29 +1,33 @@
-const database = (function () {
-  const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+
+const database = (() => {
   let dbInstance = null;
 
-  let _getDbInstance = function() {
-    let connectionString = process.env.CONNECTION || "mongodb://localhost:30000/bugDB";
+  const _getDbInstance = () => {
+    const connectionString = process.env.CONNECTION || 'mongodb://localhost:30000/bugDB';
+    // eslint-disable-next-line no-console
     console.log(`Database Connection: ${connectionString}`);
 
     if (!dbInstance) {
-        //console.log("Creating New Instance");
+      // console.log("Creating New Instance");
       mongoose.connect(connectionString, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        })
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
         .then(() => {
-          //console.log("connected");
+          // console.log("connected");
         })
         .catch((err) => {
-          //console.error("connection failed" + err);
+          // eslint-disable-next-line no-console
+          console.error(`connection failed${err}`);
         });
-      return dbInstance = mongoose;
+
+      dbInstance = mongoose;
+      return dbInstance;
     }
-    else{
-        //console.log("Instance Already Exists");
-        return dbInstance;
-    }
+
+    // console.log("Instance Already Exists");
+    return dbInstance;
   };
 
   return {
