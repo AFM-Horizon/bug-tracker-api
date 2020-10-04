@@ -1,0 +1,37 @@
+<script src="/js/updateModal.js"></script>
+<template id="commentDisplayTemplate">
+    <style>
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+        @import url("/css/custom.css");
+        @import url("/css/override.css");
+    </style>
+    <div id="commentDisplayDiv" style="min-height:100px;">
+        <div class="row no-gutters">
+            <div class="col-0 mx-1">
+                <div class="row">
+                    <label id="commentUserBadge" ></label>
+                </div>
+                <div class="row no-gutters">
+                    <a id="comment-upvote" href="#"><i class="ml-1 fa fa-caret-up fa-2x"></i></a>
+                </div>
+                <div >
+                    <div id="upvote-count" class="mr-1" style="text-align: center;"><p>999</p></div>
+                </div>
+            </div>
+            <div class="col-11">
+                <div class="row"> 
+                    <label class="mr-2" id="commentLabel" for="commentsDisplay"></label>
+                    <div id="commentDate"></div>
+                </div>
+                <div class="row"> 
+                    <textarea name="commentsDisplay" id="commentsDisplay"></textarea>
+                </div>
+                <div class="row my-1"> 
+                    <div id="comment-options">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

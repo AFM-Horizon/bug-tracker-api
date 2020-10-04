@@ -1,0 +1,20 @@
+<template id="commentEntryTemplate">
+    <style>
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+        @import url("/css/custom.css");
+        @import url("/css/override.css");
+    </style>
+    <div class="form-group">
+        <label for="commentsEntry"><span class="fa fa-comment-o mr-1"></span> Comments </label><br>
+        <div id="commentsEntryDiv">
+            <textarea class="form-control" name="commentTextArea" id="commentTextArea" placeholder="Write a comment..."></textarea>
+            <div class="row" id="comment-controls" hidden>
+                <button id="commentSaveButton" class="btn btn-success col-3" disabled>Save</button>
+                <div id="comment-icons" class="offset-7">
+                    <a href="#"> <i class="fa fa-file fa-2x ml-1" style="vertical-align: middle"></i></a>
+                    <a href="#"> <i class="fa fa-paperclip fa-2x ml-1" style="vertical-align: middle"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

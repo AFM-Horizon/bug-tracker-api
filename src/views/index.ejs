@@ -1,0 +1,69 @@
+<%- include('templates/header'); -%>
+<body>
+  <%- include('templates/scriptsection'); -%>
+  <script src="/js/frontEndRepository.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/updateModal.js"></script>
+
+  <nav class="navbar navbar-light bg-light">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="navbar-brand" href="#">
+          <img id="bugLogoIndex" src="/BugtraceLogo.gif" class="d-inline-block align-top">
+        </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <div id="userStatusContainer" class="form-inline">
+      </div>
+    </form>
+  </nav>
+
+  <div flash="<%=flash%>" id="flashComponent" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-delay="3000">
+    
+  </div>
+  
+  
+  <!--BUG CONTAINERS-->
+  <div id="main">
+    <!--
+    <div class="row">
+       <h5 class="alert alert-danger col-4">Created</h5>
+      <h5 class="alert alert-warning col-4">In-Progress</h5>
+      <h5 class="alert alert-success col-4">Fixed</h5> 
+      <h5 class="btn btn-block btn-danger col-4">Created</h5>
+      <h5 class="btn btn-block btn-danger col-4">In-Progress</h5>
+      <h5 class="btn btn-block btn-danger col-4">Fixed</h5>
+    </div>
+    -->
+
+    <div class="row" id="containerGroup">
+      <div class="col-4">
+        <h5 class="alert alert-danger">Created</h5>
+        <div class="container" id="Created">
+        </div>
+        <div class="" id="addButtonContainerCreated">
+        </div>
+      </div>
+
+      <div class="col-4">
+        <h5 class="alert alert-warning">In-Progress</h5>
+        <div class="container" id="In-Progress">
+        </div>
+        <div class="" id="addButtonContainerIn-Progress">
+        </div>
+      </div>
+
+      <div class="col-4">
+        <h5 class="alert alert-success">Fixed</h5>
+        <div class="container" id="Fixed">
+        </div>
+        <div class="" id="addButtonContainerFixed">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<div id="modalContainer">
+</div>
