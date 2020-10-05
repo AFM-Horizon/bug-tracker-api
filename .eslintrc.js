@@ -7,6 +7,7 @@ module.exports = {
   rules: {
     'no-underscore-dangle': 'off',
     'comma-dangle': 'off',
-    'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement']
+    'linebreak-style': ['error', 'windows'],
+    'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement'],
   }
 };
