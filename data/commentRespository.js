@@ -1,8 +1,12 @@
-const mongoose = require('mongoose');
-const bugObject = require('./bugSchemas');
-const database = require('./database');
+/* eslint-disable global-require */
+// const mongoose = require('mongoose');
+// const bugObject = require('./bugSchemas');
+// const database = require('./database');
 
 module.exports = (() => {
+  const mongoose = require('mongoose');
+  const bugObject = require('./bugSchemas');
+  const database = require('./database');
   const BugModel = bugObject.bugModel;
 
   database.GetDbInstance();

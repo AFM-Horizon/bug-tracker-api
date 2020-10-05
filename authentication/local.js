@@ -2,11 +2,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const repository = require('../data/authRepository');
 const authHelper = require('./authHelper');
-const init = require('./passport');
+// const init = require('./passport');
 
-const options = { passReqToCallback: true };
+const options = { passReqToCallback: true, sessions: false };
 
-init();
+// init();
 
 passport.use(new LocalStrategy(options, async (req, username, password, done) => {
   repository.GetUser({ username })

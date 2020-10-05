@@ -30,6 +30,8 @@ function loginRedirect(req, res, next) {
   return null;
 }
 
+// WILL WE NEED THIS? I think we probably wont need to worry about this, If someone calls
+// The Registration endpoint multiple times we will simply reissue the JWT right?
 function checkAlreadyAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     res.redirect('/');
