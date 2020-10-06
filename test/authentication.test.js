@@ -86,7 +86,7 @@ describe('AUTH TESTS', () => {
   // });
 
   describe('Register Tests ->', () => {
-    it('Should register a new user', (done) => {
+    it('Register_ShouldRegisterUser', (done) => {
       chai
         .request(server)
         .post('/auth/register')
@@ -101,6 +101,29 @@ describe('AUTH TESTS', () => {
           res.type.should.eql('application/json');
           res.body.user.username.should.eql('Bob');
           res.body.user.password.should.not.eql(null);
+          done();
+        });
+    });
+
+    it('Register_ShouldNotAllowDuplicateUsername', (done) => {
+      chai
+        .request(server)
+        .post('/auth/register')
+        .send({
+          username: 'Bob',
+          password: 'password',
+        })
+        .end(() => {
+        });
+      chai
+        .request(server)
+        .post('/auth/register')
+        .send({
+          username: 'Bob',
+          password: 'password2',
+        })
+        .end((err, res) => {
+          res.text.should.be.eql('That Username Is Already Taken');
           done();
         });
     });

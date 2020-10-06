@@ -1,10 +1,8 @@
 const express = require('express');
 const bugController = require('../controllers/bugController');
 const testController = require('../controllers/testBugController');
-const authHelpers = require('../authentication/authHelper');
 
 const router = express.Router();
-router.use(authHelpers.loginRedirect);
 
 router.get('/getAll', bugController.get_all_bugs);
 router.get('/getById/:id', bugController.get_bug_by_id);
