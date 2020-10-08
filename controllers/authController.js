@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const repo = require('../data/authRepository');
 const authHelper = require('../authentication/authHelper');
 const authenticator = require('../authentication/authenticator');
@@ -14,6 +15,14 @@ const authenticator = require('../authentication/authenticator');
 //     }
 //   });
 // }
+
+const generateAccessToken = (user, expiry) => {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: `${expiry}s` });
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+};
 
 module.exports = {
   register_a_user_post: async (req, res) => {
@@ -39,25 +48,22 @@ module.exports = {
         }
         res.status(500).send(errMsg);
       });
+  },
+
+  login_a_user_post: (req, res) => {
+    const { username } = req.body;
+
+    const user = {
+      name: username
+    };
+
+    const accessToken = generateAccessToken(user, '20');
+    const refreshToken = generateRefreshToken(user);
+    //
   }
 };
 
-// WILL BE REPLACED WITH JWT LOGIN ENDPOINT
-// login_a_user_post: (req, res, next) => {
-//   passport.authenticate('local', (err, userReturn) => {
-//     if (err) {
-//       req.flash('error', 'Login Failed. Mysterious...');
-//       res.redirect('/auth/login');
-//     }
-//     if (!userReturn) {
-//       req.flash('error', 'Login Failed. User not found');
-//       res.redirect('/auth/login');
-//     }
-//     if (userReturn) {
-//       login(userReturn, req, res);
-//     }
-//   })(req, res, next);
-// },
+
 
 // WILL BE REPLACED WITH TOKEN REFRESH EXPIRATION SYSTEM
 // logout_a_user: (req, res) => {
