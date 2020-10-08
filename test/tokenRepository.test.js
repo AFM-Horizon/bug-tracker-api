@@ -40,7 +40,7 @@ describe('Refresh Token Tests ->', () => {
   describe('Get Single Refresh Token', () => {
     it('Gets Single Token', async () => {
       await tokenRepo.InsertToken(token);
-      tokenRepo.GetToken('squirtle')
+      tokenRepo.GetTokenByUsername('squirtle')
         .then((data) => {
           expect(data).to.not.equal(null);
           expect(data.username).to.be.eql('squirltle');

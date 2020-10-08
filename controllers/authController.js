@@ -2,22 +2,12 @@ const jwt = require('jsonwebtoken');
 const repo = require('../data/authRepository');
 const authHelper = require('../authentication/authHelper');
 const authenticator = require('../authentication/authenticator');
+const tokenRepo = require('../data/tokenRepository');
 
-// TO BE REPLACED WITH JWT RESPONSE
-// function login(userReturn, req, res) {
-//   req.logIn(userReturn, (err) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.status(200);
-//       req.flash('success', 'You are logged in, prepare to squash bugs.');
-//       res.redirect('/');
-//     }
-//   });
-// }
+require('dotenv').config();
 
-const generateAccessToken = (user, expiry) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: `${expiry}s` });
+const generateAccessToken = (user) => {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
 };
 
 const generateRefreshToken = (user) => {
@@ -51,22 +41,48 @@ module.exports = {
   },
 
   login_a_user_post: (req, res) => {
-    const { username } = req.body;
+    authenticator.authenticate(req.body.username, req.body.password)
+      .then((userReturn) => {
+        const user = {
+          username: userReturn.username
+        };
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        tokenRepo.InsertToken({ token: refreshToken, username: user.username });
+        res.status(200);
+        res.json({ accessToken, refreshToken });
+      })
+      .catch((err) => {
+        res.status(401).send({ error: err });
+      });
+  },
 
-    const user = {
-      name: username
-    };
+  // eslint-disable-next-line consistent-return
+  refresh_token_post: (req, res) => {
+    const refreshToken = req.body.token;
+    if (refreshToken == null) {
+      return res.sendStatus(401);
+    }
+    tokenRepo.GetToken(req.body.token)
+      // eslint-disable-next-line consistent-return
+      .then((data) => {
+        console.log(data)
+        if (data == null) {
+          return res.sendStatus(403);
+        }
+      });
 
-    const accessToken = generateAccessToken(user, '20');
-    const refreshToken = generateRefreshToken(user);
-    //
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      const accessToken = generateAccessToken({ name: user.name });
+      res.json({ accessToken });
+    });
+  },
+
+  invalidate_token_delete: (req, res) => {
+    tokenRepo.DeleteToken(req.body.token);
+    res.sendStatus(204);
   }
 };
-
-
-
-// WILL BE REPLACED WITH TOKEN REFRESH EXPIRATION SYSTEM
-// logout_a_user: (req, res) => {
-//   req.logout();
-//   res.redirect('/');
-// },

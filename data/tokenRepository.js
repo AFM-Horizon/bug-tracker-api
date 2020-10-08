@@ -6,8 +6,12 @@ module.exports = (() => {
 
   database.GetDbInstance();
 
-  async function _getToken(username) {
+  async function _getTokenByUsername(username) {
     return TokenModel.findOne({ username });
+  }
+
+  async function _getToken(token) {
+    return TokenModel.findOne({ token });
   }
 
   async function _insertToken(token) {
@@ -15,8 +19,12 @@ module.exports = (() => {
     return tokenModel.save();
   }
 
-  async function _deleteToken(username) {
-    await TokenModel.deleteOne({ username });
+  async function _deleteTokenByUsername(username) {
+    await TokenModel.deleteMany({ username });
+  }
+
+  async function _deleteToken(token) {
+    await TokenModel.deleteOne({ token });
   }
 
   async function _deleteCollection() {
@@ -28,14 +36,20 @@ module.exports = (() => {
   }
 
   return {
-    GetToken(username) {
-      return _getToken(username);
+    GetTokenByUsername(username) {
+      return _getTokenByUsername(username);
+    },
+    GetToken(token) {
+      return _getToken(token);
     },
     InsertToken(token) {
       return _insertToken(token);
     },
-    DeleteToken(username) {
-      return _deleteToken(username);
+    DeleteTokenByUsername(username) {
+      return _deleteTokenByUsername(username);
+    },
+    DeleteToken(token) {
+      return _deleteToken(token);
     },
     DeleteCollection() {
       return _deleteCollection();
