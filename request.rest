@@ -6,7 +6,7 @@ DELETE http://localhost:3002/auth/logout
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE2MDIxMjI1MzB9.mb9ueTz43SpoAwTnUrlx_FJDYR0RzJyu-XgVb7q8BZ8"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE2MDIxNDI2MzR9.tFyCORGhw3VW94d-MqYNDP3mCWh010fRPPUGcDGvhgQ"
 }
 
 ###
@@ -14,7 +14,7 @@ POST http://localhost:3002/auth/token
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE2MDIxMjI1MzB9.mb9ueTz43SpoAwTnUrlx_FJDYR0RzJyu-XgVb7q8BZ8"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE2MDIxNDI2MzR9.tFyCORGhw3VW94d-MqYNDP3mCWh010fRPPUGcDGvhgQ"
 }
 
 ###

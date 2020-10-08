@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const repo = require('../data/authRepository');
 const authHelper = require('../authentication/authHelper');
@@ -58,26 +59,22 @@ module.exports = {
   },
 
   // eslint-disable-next-line consistent-return
-  refresh_token_post: (req, res) => {
+  refresh_token_post: async (req, res) => {
     const refreshToken = req.body.token;
     if (refreshToken == null) {
       return res.sendStatus(401);
     }
-    tokenRepo.GetToken(req.body.token)
-      // eslint-disable-next-line consistent-return
-      .then((data) => {
-        console.log(data)
-        if (data == null) {
-          return res.sendStatus(403);
-        }
-      });
+    const result = await tokenRepo.GetToken(req.body.token);
+    if (result == null) {
+      return res.sendStatus(403);
+    }
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
       const accessToken = generateAccessToken({ name: user.name });
-      res.json({ accessToken });
+      return res.json({ accessToken });
     });
   },
 
