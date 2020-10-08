@@ -25,15 +25,12 @@ describe('Refresh Token Tests ->', () => {
   describe('Delete Single Refresh Token', () => {
     it('Deletes A Single Token', async () => {
       await tokenRepo.InsertToken(token);
-      tokenRepo.GetAll()
-        .then((data) => {
-          expect(data.length).to.be.eql(1);
-        });
-      await tokenRepo.DeleteToken('squirtle');
-      tokenRepo.GetAll()
-        .then((data) => {
-          expect(data.length).to.be.eql(0);
-        });
+      const data = await tokenRepo.GetAll();
+      expect(data.length).to.be.eql(1);
+
+      await tokenRepo.DeleteToken(token.token);
+      const data2 = await tokenRepo.GetAll();
+      expect(data2.length).to.be.eql(0);
     });
   });
 
