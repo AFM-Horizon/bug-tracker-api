@@ -40,7 +40,7 @@ describe('Refresh Token Tests ->', () => {
       tokenRepo.GetTokenByUsername('squirtle')
         .then((data) => {
           expect(data).to.not.equal(null);
-          expect(data.username).to.be.eql('squirltle');
+          expect(data.username).to.be.eql('squirtle');
           expect(data.token).to.be.eql('ej39jflkjs0ialjk32knjf9jd09uj3knff=3kolf9ma');
         });
       tokenRepo.GetAll()

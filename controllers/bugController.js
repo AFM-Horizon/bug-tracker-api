@@ -47,8 +47,10 @@ module.exports = {
   },
 
   update_bug: (req, res) => {
+    const { id } = req.params;
+    const bug = req.body;
     repository
-      .UpdateBug(req.body)
+      .UpdateBug(id, bug)
       .then((data) => {
         res.status(204).send(data);
       })

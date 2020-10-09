@@ -4,7 +4,7 @@ const database = (() => {
   let dbInstance = null;
 
   const _getDbInstance = () => {
-    const connectionString = process.env.CONNECTION || 'mongodb://localhost:30000/bugDB';
+    const connectionString = process.env.CONNECTION || 'mongodb://mongo:27017/bugDB';
     // eslint-disable-next-line no-console
     console.log(`Database Connection: ${connectionString}`);
 

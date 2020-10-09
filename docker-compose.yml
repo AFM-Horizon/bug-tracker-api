@@ -1,8 +1,13 @@
 version: "3"
-services:    
- bug-tracker:
-  image: mongo:latest
-  ports:
-   - "30000:27017"
-  environment:
-   - CONNECTION
+services:
+  api:
+    image: node:latest
+    build: .
+    ports:
+      - "3002:3002"
+    links:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"

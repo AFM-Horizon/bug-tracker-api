@@ -33,9 +33,9 @@ module.exports = (() => {
     bug.save();
   }
 
-  async function _updateBug(query) {
+  async function _updateBug(id, bug) {
     return BugModel.findByIdAndUpdate(
-      query.id, { $set: query.updateObject }, { upsert: false, new: true }, null
+      id, { $set: bug }, { upsert: false, new: true }, null
     );
   }
 
@@ -55,8 +55,8 @@ module.exports = (() => {
     GetBugByID(id) {
       return _getBugByID(id);
     },
-    UpdateBug(bug) {
-      return _updateBug(bug);
+    UpdateBug(id, bug) {
+      return _updateBug(id, bug);
     },
     AddTag(id, tag) {
       return _addTag(id, tag);
