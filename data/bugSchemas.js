@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const comment = require('./commentSchemas');
 
-// eslint-disable-next-line prefer-const
-// eslint-disable-next-line prefer-destructuring
-const commentSchema = comment.commentSchema;
+const { commentSchema } = comment;
 
 const tagSchema = new mongoose.Schema({
   name: { type: String, required: true },

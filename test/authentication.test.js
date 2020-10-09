@@ -23,14 +23,14 @@ describe('AUTH TESTS', () => {
           username: 'Charmander',
           password: 'password'
         })
-        .end((error, result) => {
+        .end((_error, result) => {
           chai
             .request(server)
             .delete('/auth/logout')
             .send({
               token: result.body.refreshToken
             })
-            .end((err, res) => {
+            .end((_err, res) => {
               res.status.should.eql(204);
               chai
                 .request(server)
@@ -38,7 +38,7 @@ describe('AUTH TESTS', () => {
                 .send({
                   token: result.body.refreshToken
                 })
-                .end((errsu, resu) => {
+                .end((_errsu, resu) => {
                   resu.status.should.eql(403);
                 });
             });
@@ -53,7 +53,7 @@ describe('AUTH TESTS', () => {
           username: 'Charmander',
           password: 'password'
         })
-        .end((error, result) => {
+        .end((_error, result) => {
           chai
             .request(server)
             .post('/auth/token')
@@ -98,7 +98,7 @@ describe('AUTH TESTS', () => {
           username: 'Charmander',
           password: 'password!?!???'
         })
-        .end((err, res) => {
+        .end((_err, res) => {
           res.redirects.length.should.eql(0);
           res.status.should.eql(401);
           res.type.should.eql('application/json');
@@ -133,7 +133,7 @@ describe('AUTH TESTS', () => {
             username: 'Charmander',
             password: 'password',
           })
-          .end((err, res) => {
+          .end((_err, res) => {
             res.text.should.be.eql('That Username Is Already Taken');
             done();
           });

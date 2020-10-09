@@ -6,7 +6,7 @@ const chroma = require('chroma-log');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const bugRouter = require('./routes/bug-routes');
-const commentRouter = require('./routes/comments-routes');
+// const commentRouter = require('./routes/comments-routes');
 const authRouter = require('./routes/auth-routes');
 
 const app = express();
@@ -31,6 +31,6 @@ app.use(chroma);
 
 app.use('/auth', authRouter);
 app.use('/bugs', bugRouter);
-app.use('/comments', commentRouter);
+// app.use('/comments', commentRouter);
 
 module.exports = app;

@@ -1,11 +1,14 @@
-const express = require('express');
-const controller = require('../controllers/commentController');
+// const express = require('express');
+// const controller = require('../controllers/commentController');
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/update', controller.update_comment);
-router.post('/add', controller.insert_comment);
-router.get('/getall', controller.get_comments);
-router.post('/delete', controller.delete_comment);
+// Will have the comments as children of the bugs,
+// accessible through the bug endpoint as a nested collection
 
-module.exports = router;
+// router.post('/update', controller.update_comment);
+// router.post('/add', controller.insert_comment);
+// router.get('/getall', controller.get_comments);
+// router.post('/delete', controller.delete_comment);
+
+// module.exports = router;

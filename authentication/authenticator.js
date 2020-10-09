@@ -1,7 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable prefer-promise-reject-errors */
+const jwt = require('jsonwebtoken');
 const repository = require('../data/authRepository');
 const authHelper = require('./authHelper');
+
+require('dotenv').config();
 
 module.exports = {
   authenticate: (username, password) => {
@@ -30,4 +31,21 @@ module.exports = {
     };
     return new Promise(prom);
   },
+
+  authenticateToken: (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) {
+      return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  }
 };

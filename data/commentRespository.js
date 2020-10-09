@@ -1,12 +1,8 @@
-/* eslint-disable global-require */
-// const mongoose = require('mongoose');
-// const bugObject = require('./bugSchemas');
-// const database = require('./database');
+const mongoose = require('mongoose');
+const bugObject = require('./bugSchemas');
+const database = require('./database');
 
 module.exports = (() => {
-  const mongoose = require('mongoose');
-  const bugObject = require('./bugSchemas');
-  const database = require('./database');
   const BugModel = bugObject.bugModel;
 
   database.GetDbInstance();
@@ -60,8 +56,8 @@ module.exports = (() => {
     InsertComment(bugId, comment) {
       return _insertComment(bugId, comment);
     },
-    UpdateComment(bugId, commentId, update) {
-      return _updateComment(bugId, commentId, update);
+    UpdateComment(bugId, commentId, comment) {
+      return _updateComment(bugId, commentId, comment);
     },
   };
 })();
